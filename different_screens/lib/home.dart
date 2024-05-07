@@ -1,3 +1,5 @@
+import 'package:different_screens/screens/cart.dart';
+import 'package:different_screens/screens/products.dart';
 import 'package:different_screens/screens/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   List<Widget> body = const [
-    Icon(Icons.home),
-    Icon(Icons.menu),
+    ProductsPage(),
+    CartPage(),
     ProfilePage(),
   ];
 
@@ -32,12 +34,12 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.home),
+            label: 'Products',
+            icon: Icon(Icons.business),
           ),
           BottomNavigationBarItem(
-            label: 'Game',
-            icon: Icon(Icons.gamepad),
+            label: 'Cart',
+            icon: Icon(Icons.shopping_cart),
           ),
           BottomNavigationBarItem(
             label: 'Profile',
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       centerTitle: true,
       title: const Text(
-        'Memory Game',
+        'Screens App',
         style: TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
