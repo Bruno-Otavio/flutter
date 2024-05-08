@@ -17,3 +17,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/coca-cola.jpg
+    - assets/images/hamburguer.jpg
+    - assets/images/pao.jpg

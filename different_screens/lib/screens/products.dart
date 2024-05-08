@@ -20,16 +20,12 @@ class _ProductsPageState extends State<ProductsPage> {
     _getProducts();
     return Scaffold(
       appBar: appBar(),
-      body: Column(
-        children: [
-          Container(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Container();
-              },
-            )
-          )
-        ],
+      body: ListView.separated(
+        itemCount: products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ProductModelWidget(product: products[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(thickness: 0, color: Colors.white,),
       ),
     );
   }

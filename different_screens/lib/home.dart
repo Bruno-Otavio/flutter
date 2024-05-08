@@ -14,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   List<Widget> body = const [
     ProductsPage(),
+    // Icon(Icons.home),
     CartPage(),
     ProfilePage(),
   ];
