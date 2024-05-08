@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:different_screens/models/product_model.dart';
+import 'package:different_screens/api/pokemon.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -11,8 +12,16 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   List<ProductModel> products = [];
 
+  late Future<Pokemon> futurePokemon;
+
   void _getProducts() {
     products = ProductModel.getProducts();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    futurePokemon = fetchPokemon();
   }
 
   @override
@@ -20,13 +29,25 @@ class _ProductsPageState extends State<ProductsPage> {
     _getProducts();
     return Scaffold(
       appBar: appBar(),
-      body: ListView.separated(
-        itemCount: products.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ProductModelWidget(product: products[index]);
+      body: FutureBuilder<Pokemon>(
+        future: futurePokemon,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.name);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+
+          return const CircularProgressIndicator();
         },
-        separatorBuilder: (BuildContext context, int index) => const Divider(thickness: 0, color: Colors.white,),
-      ),
+      )
+      // body: ListView.separated(
+      //   itemCount: products.length,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return ProductModelWidget(product: products[index]);
+      //   },
+      //   separatorBuilder: (BuildContext context, int index) => const Divider(thickness: 0, color: Colors.white,),
+      // ),
     );
   }
 
