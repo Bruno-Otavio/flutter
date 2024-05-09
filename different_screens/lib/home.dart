@@ -35,11 +35,11 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-            label: 'Products',
+            label: 'Pokemons',
             icon: Icon(Icons.business),
           ),
           BottomNavigationBarItem(
-            label: 'Cart',
+            label: 'Favoritos',
             icon: Icon(Icons.shopping_cart),
           ),
           BottomNavigationBarItem(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:different_screens/models/product_model.dart';
 import 'package:different_screens/api/pokemon.dart';
+import 'package:flutter/widgets.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -12,7 +13,7 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   List<ProductModel> products = [];
 
-  late Future<Pokemon> futurePokemon;
+  late Future<List<Pokemon>> futurePokemon;
 
   void _getProducts() {
     products = ProductModel.getProducts();
@@ -29,11 +30,12 @@ class _ProductsPageState extends State<ProductsPage> {
     _getProducts();
     return Scaffold(
       appBar: appBar(),
-      body: FutureBuilder<Pokemon>(
+      body: FutureBuilder<List<Pokemon>>(
         future: futurePokemon,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Text(snapshot.data!.name);
+            final List<Pokemon> pokemons = snapshot.data!;
+            return buildPokemons(pokemons);
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
@@ -51,10 +53,46 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
+  Widget buildPokemons(List<Pokemon> pokemons) {
+    return GridView.count(
+      crossAxisCount: 2,
+      children: List.generate(pokemons.length, (index) {
+        final Pokemon pokemon = pokemons[index];
+        return Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.blueGrey,
+                  blurRadius: 5,
+                  spreadRadius: 0.0,
+                )
+              ]
+            ),
+            child: Column(
+              children: [
+                Image.network(pokemon.imageUrl),
+                Text(
+                  pokemon.name.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+              ],
+            )
+          ),
+        );
+      })
+    );
+  }
+
   AppBar appBar() {
     return AppBar(
       centerTitle: true,
-      title: const Text('Products'),
+      title: const Text('Pokemons'),
     );
   }
 }
