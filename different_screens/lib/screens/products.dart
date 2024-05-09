@@ -21,7 +21,7 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   void initState() {
     super.initState();
-    futurePokemon = fetchPokemon();
+    futurePokemon = PokeController.fetchPokemon();
   }
 
   @override

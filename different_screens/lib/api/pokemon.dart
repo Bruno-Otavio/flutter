@@ -1,9 +1,13 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<Pokemon> fetchPokemon() async {
+class PokeController {
+  static Future<Pokemon> fetchPokemon() async {
   final response = await http
-    .get(Uri.parse('https://pokeapi.co/api/v2/pokemon/1'));
+    .get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=50&offset=0'));
+
+  var jsonData = jsonDecode(response.body);
+  print(jsonData['results']);
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -15,25 +19,28 @@ Future<Pokemon> fetchPokemon() async {
     throw Exception('Failed to load pokemon');
   }
 }
+}
 
 class Pokemon {
   final String name;
-  final List types;
+  final String url;
 
   const Pokemon({
     required this.name,
-    required this.types,
+    required this.url,
   });
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
+    final pokemons = json['results'];
+
     return switch (json) {
       {
         'name': String name,
-        'types': List types, 
+        'url': String url,
       } => 
         Pokemon(
           name: name,
-          types: types, 
+          url: url,
         ),
       _ => throw const FormatException('Failed to load pokemon.'),
     };
