@@ -4,7 +4,7 @@ import 'dart:convert';
 class PokeController {
   static Future<List<Pokemon>> fetchPokemon() async {
     final response = await http
-      .get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=50&offset=0'));
+      .get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=300&offset=0'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,

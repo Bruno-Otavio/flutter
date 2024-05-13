@@ -36,11 +36,11 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(
             label: 'Pokemons',
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.catching_pokemon),
           ),
           BottomNavigationBarItem(
             label: 'Favoritos',
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.favorite),
           ),
           BottomNavigationBarItem(
             label: 'Profile',

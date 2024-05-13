@@ -1,7 +1,7 @@
+import 'package:different_screens/models/pokemon_model.dart';
 import 'package:flutter/material.dart';
 import 'package:different_screens/models/product_model.dart';
 import 'package:different_screens/api/pokemon.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -40,7 +40,7 @@ class _ProductsPageState extends State<ProductsPage> {
             return Text('${snapshot.error}');
           }
 
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       )
       // body: ListView.separated(
@@ -58,33 +58,7 @@ class _ProductsPageState extends State<ProductsPage> {
       crossAxisCount: 2,
       children: List.generate(pokemons.length, (index) {
         final Pokemon pokemon = pokemons[index];
-        return Padding(
-          padding: const EdgeInsets.all(15),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.blueGrey,
-                  blurRadius: 5,
-                  spreadRadius: 0.0,
-                )
-              ]
-            ),
-            child: Column(
-              children: [
-                Image.network(pokemon.imageUrl),
-                Text(
-                  pokemon.name.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            )
-          ),
-        );
+        return PokemonWidget(pokemon: pokemon);
       })
     );
   }
