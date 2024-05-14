@@ -1,7 +1,9 @@
-import 'package:different_screens/models/pokemon_model.dart';
 import 'package:flutter/material.dart';
-import 'package:different_screens/models/product_model.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:different_screens/models/pokemon_model.dart';
 import 'package:different_screens/api/pokemon.dart';
+import 'package:different_screens/db/controller.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -11,23 +13,19 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  List<ProductModel> products = [];
-
   late Future<List<Pokemon>> futurePokemon;
 
-  void _getProducts() {
-    products = ProductModel.getProducts();
-  }
+  late final Future<Database> db;
 
   @override
   void initState() {
     super.initState();
     futurePokemon = PokeController.fetchPokemon();
+    db = DatabaseController.connect();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getProducts();
     return Scaffold(
       appBar: appBar(),
       body: FutureBuilder<List<Pokemon>>(
@@ -35,7 +33,7 @@ class _ProductsPageState extends State<ProductsPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<Pokemon> pokemons = snapshot.data!;
-            return buildPokemons(pokemons);
+            return buildPokemons(pokemons, db);
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
@@ -53,12 +51,12 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
-  Widget buildPokemons(List<Pokemon> pokemons) {
+  Widget buildPokemons(List<Pokemon> pokemons, Future<Database> database) {
     return GridView.count(
       crossAxisCount: 2,
       children: List.generate(pokemons.length, (index) {
         final Pokemon pokemon = pokemons[index];
-        return PokemonWidget(pokemon: pokemon);
+        return PokemonWidget(pokemon: pokemon, db: database);
       })
     );
   }

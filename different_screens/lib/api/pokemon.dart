@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -56,6 +57,20 @@ class Pokemon {
         ),
       _ => throw const FormatException('Failed to load pokemon.'),
     };
+  }
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': url.split('/')[url.split('/').length-2],
+      'name': name,
+      'url': url,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Pokemon(id: ${url.split('/')[url.split('/').length-2]}, name: $name, $url, $imageUrl)';
   }
 }
 
