@@ -18,6 +18,18 @@ class PokeController {
       throw Exception('Failed to load pokemon');
     }
   }
+
+  static Future<PokemonInfo> fetchPokeInfo(String url) async {
+    final response = await http
+      .get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      return PokemonInfo.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception('Failed to load pokemon informations');
+    }
+  }
+
 }
 
 class Pokemon {
@@ -43,6 +55,38 @@ class Pokemon {
           imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${url.split('/')[url.split('/').length-2]}.png'
         ),
       _ => throw const FormatException('Failed to load pokemon.'),
+    };
+  }
+}
+
+class PokemonInfo {
+  final int id;
+  final String name;
+  final List types;
+  final Map sprites;
+
+  const PokemonInfo({
+    required this.id,
+    required this.name,
+    required this.types,
+    required this.sprites,
+  });
+
+  factory PokemonInfo.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "id": int id,
+        "name": String name,
+        "types": List types,
+        "sprites": Map sprites,
+      } => 
+        PokemonInfo(
+          id: id,
+          name: name,
+          types: types,
+          sprites: sprites,
+        ),
+      _ => throw const FormatException('Failed to load pokemon informations.'),
     };
   }
 }
