@@ -21,6 +21,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Pokemons',
           style: TextStyle(
@@ -39,7 +40,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
-
+    
           return const Center(child: CircularProgressIndicator(),);
         },
       ),
