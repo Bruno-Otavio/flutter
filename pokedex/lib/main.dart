@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/home.dart';
 import 'package:pokedex/screens/login_page.dart';
-import 'package:pokedex/screens/pokemons.dart';
+import 'package:pokedex/screens/pokemon_details_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,7 +16,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
       routes: {
-        '/pokemons': (context) => const PokemonsScreen(),
+        '/home': (context) => const HomePage(),
+        '/pokemons/details': (context) => const PokemonDetailsPage(),
       }
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/objectModels/pokemon.dart';
+import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/widgets/pokemon_widget.dart';
+import 'package:pokedex/controller/pokemon_controller.dart';
 
 class PokemonsScreen extends StatefulWidget {
   const PokemonsScreen({super.key});
@@ -50,9 +52,12 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   Widget _buildPokemons(List<Pokemon> pokemons) {
     return GridView.count(
       crossAxisCount: 2,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      padding: const EdgeInsets.all(15),
       children: List.generate(pokemons.length, (index) {
         final Pokemon pokemon = pokemons[index];
-        return Text(pokemon.name);
+        return PokemonWidget(pokemon: pokemon);
       })
     );
   }

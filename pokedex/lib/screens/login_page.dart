@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
                       LoginButton(onTap: () {
                         if (_formKey.currentState!.validate()) {
                           if (usernameController.text == 'jorge' && passwordController.text == '123') {
-                            Navigator.pushReplacementNamed(context, '/pokemons');
+                            Navigator.pushReplacementNamed(context, '/home');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Incorrect Username or Password'))
