@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/services/database_service.dart';
 
 class PokemonWidget extends StatefulWidget {
   final Pokemon pokemon; 
@@ -14,6 +15,8 @@ class PokemonWidget extends StatefulWidget {
 }
 
 class _PokemonWidgetState extends State<PokemonWidget> {
+  final DatabaseService _databaseService = DatabaseService.instance;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -45,7 +48,7 @@ class _PokemonWidgetState extends State<PokemonWidget> {
               right: 0,
               child: GestureDetector(
                 onTap: () {
-                  print('Favorite ${widget.pokemon.name}');
+                  _databaseService.addFavorite(widget.pokemon);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(2),
