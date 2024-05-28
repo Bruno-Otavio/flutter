@@ -27,7 +27,7 @@ class DatabaseService {
         db.execute('''
           CREATE TABLE $_favoritesTableName (
             $_favoritesIdColumnName INTEGER PRIMARY KEY auto_increment,
-            $_favoritesTableName TEXT NOT NULL
+            $_favoritesPokemonName TEXT NOT NULL
           )
         ''');
       },
