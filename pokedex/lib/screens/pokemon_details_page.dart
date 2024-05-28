@@ -83,7 +83,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                           width: 3
                         )
                       ),
-                      child: Text(details.types[0]),
+                      child: Text(details.types[0]['type']['name']),
                     )
                   ],
                 );

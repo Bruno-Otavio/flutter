@@ -24,7 +24,7 @@ class PokemonDetails {
           types: types,
           imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png'
         ),
-      _ => throw const FormatException('Failed to load pokemon')
+      _ => throw const FormatException('Failed to load details')
     };
   }
 }

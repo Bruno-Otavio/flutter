@@ -20,12 +20,12 @@ class PokemonController {
 
   static Future<PokemonDetails> fetchPokemon(int id) async {
     final response = await http
-      .get(Uri.parse('https://pokeapi.co/api/v2/pokemon$id'));
+      .get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$id'));
 
     if (response.statusCode == 200) {
       return PokemonDetails.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
-      throw Exception('Failed to load pokemon');
+      throw Exception('Failed to load detailsl');
     }
   }
 }

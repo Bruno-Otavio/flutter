@@ -29,7 +29,7 @@ class _PokemonWidgetState extends State<PokemonWidget> {
           color: Colors.white,
           border: Border.all(
             width: 2,
-            color: Colors.red.shade300
+            color: Colors.red.shade100
           ),
           borderRadius: BorderRadius.circular(7),
           boxShadow: const [
@@ -39,20 +39,50 @@ class _PokemonWidgetState extends State<PokemonWidget> {
             )
           ]
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Hero(
-              tag: widget.pokemon.imageUrl,
-              child: Image.network(
-                widget.pokemon.imageUrl,
-                width: 100,
-                fit: BoxFit.contain,
+            Positioned(
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  print('Favorite ${widget.pokemon.name}');
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  margin: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                      color: Colors.red,
+                      width: 2,
+                    )
+                  ),
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                  ),
+                ),
               ),
             ),
-            Text(
-              widget.pokemon.name.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 17,
+            Container(
+              alignment: Alignment.center,
+              child: Hero(
+                tag: widget.pokemon.imageUrl,
+                child: Image.network(
+                  widget.pokemon.imageUrl,
+                  width: 100,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              margin: const EdgeInsets.only(bottom: 15),
+              child: Text(
+                widget.pokemon.name.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 17,
+                ),
               ),
             )
           ],
