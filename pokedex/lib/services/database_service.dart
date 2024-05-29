@@ -62,6 +62,23 @@ class DatabaseService {
     )).toList();
   }
 
+  Future<List<Pokemon>> getFavorite(int id) async {
+    final db = await database;
+    final data = await db.query(
+      _favoritesTableName,
+      where: 'id = ?',
+      whereArgs: [id]
+    );
+    
+    final pokemon = data.map((e) => Pokemon(
+      id: e['id'] as int,
+      name: e['pokemon'] as String,
+      imageUrl: e['image'] as String
+    ),).toList();
+
+    return pokemon;
+  }
+
   void removeFavorite(int id) async {
     final db = await database;
     await db.delete(

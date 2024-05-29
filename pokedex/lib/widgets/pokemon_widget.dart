@@ -46,26 +46,7 @@ class _PokemonWidgetState extends State<PokemonWidget> {
           children: [
             Positioned(
               right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  _databaseService.addFavorite(widget.pokemon);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 2,
-                    )
-                  ),
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
+              child: FavoriteButton(databaseService: _databaseService, pokemon: widget.pokemon),
             ),
             Container(
               alignment: Alignment.center,
@@ -89,6 +70,75 @@ class _PokemonWidgetState extends State<PokemonWidget> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({
+    super.key,
+    required DatabaseService databaseService,
+    required this.pokemon,
+  }) : _databaseService = databaseService;
+
+  final DatabaseService _databaseService;
+  final Pokemon pokemon;
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool _favorited = false;
+
+  void checkFavorited() async {
+    final pokemon = await widget._databaseService.getFavorite(widget.pokemon.id);
+    if (pokemon.isNotEmpty) {
+      _favorited = true;
+    } else {
+      _favorited = false;
+    }
+  }
+
+  Color favoriteColor() {
+    if (_favorited) {
+      return Colors.red;
+    } else {
+      return Colors.grey;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkFavorited();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        widget._databaseService.addFavorite(widget.pokemon);
+        print(_favorited);
+        setState(() {
+          _favorited = !_favorited;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        margin: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            color: favoriteColor(),
+            width: 2,
+          )
+        ),
+        child: Icon(
+          Icons.favorite,
+          color: favoriteColor(),
         ),
       ),
     );

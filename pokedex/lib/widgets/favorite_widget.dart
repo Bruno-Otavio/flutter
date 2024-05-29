@@ -23,7 +23,8 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: GestureDetector(
         onLongPress: () {
-          _databaseService.removeFavorite(widget.favorite.id);          
+          _databaseService.removeFavorite(widget.favorite.id);
+          setState(() {print('deleted');});
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
