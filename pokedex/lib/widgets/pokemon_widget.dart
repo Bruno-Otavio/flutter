@@ -121,10 +121,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     return GestureDetector(
       onTap: () {
         widget._databaseService.addFavorite(widget.pokemon);
-        print(_favorited);
-        setState(() {
-          _favorited = !_favorited;
-        });
       },
       child: Container(
         padding: const EdgeInsets.all(2),

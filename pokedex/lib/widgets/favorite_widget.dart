@@ -22,9 +22,35 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/pokemons/details', arguments: widget.favorite);
+        },
         onLongPress: () {
-          _databaseService.removeFavorite(widget.favorite.id);
-          setState(() {print('deleted');});
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Alert'),
+                content: Text('Do you want to remove ${widget.favorite.name} from favorites?'),
+                actions: [
+                  TextButton(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }, 
+                  ),
+                  TextButton(
+                    child: const Text('Confirm'),
+                    onPressed: () {
+                      _databaseService.removeFavorite(widget.favorite.id);
+                      Navigator.of(context).pop();
+                    }, 
+                  ),
+                ],
+              );
+            }
+          );
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
