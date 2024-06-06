@@ -2,7 +2,7 @@ class Product {
   final int id;
   final String nome;
   final String img;
-  final double preco;
+  final dynamic preco;
 
   const Product({
     required this.id,
@@ -17,13 +17,14 @@ class Product {
         'id': int id,
         'nome': String nome,
         'img': String img,
-        'preco': double preco,
-      } => Product(
-        id: id,
-        nome: nome,
-        img: img,
-        preco: preco,
-      ),
+        'preco': dynamic preco,
+      } => 
+        Product(
+          id: id,
+          nome: nome,
+          img: img,
+          preco: preco,
+        ),
       _ => throw const FormatException('Failed to load product'),
     };
   }

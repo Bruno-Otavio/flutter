@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 import 'package:lanchonete/models/product_model.dart';
 import 'package:lanchonete/widgets/product_widget.dart';
 
@@ -13,12 +12,18 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  List _products = [];
+  late Future<List> futureProducts;
 
-  Future<List<Product>> _getProducts() async {
-    final String response = await rootBundle.loadString('mocks/produtos.json');
+  Future<List> _getProducts() async {
+    final response = await rootBundle.loadString('lib/mocks/produtos.json');
     final data = jsonDecode(response);
-    final list = data.map((e) => Product.fromJson(data));
+    return data.map((e) => Product.fromJson(e)).toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    futureProducts = _getProducts();
   }
 
   @override
@@ -29,11 +34,23 @@ class _ProductsScreenState extends State<ProductsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: ListView(
-          children: const [
-            ProductWidget(),
-            ProductWidget(),
-          ],
+        child: FutureBuilder(
+          future: futureProducts, 
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final products = snapshot.data!;
+              return ListView.builder(
+                itemCount: snapshot.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ProductWidget(product: product);
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            return const Center(child: CircularProgressIndicator(),);
+          },
         ),
       ),
     );

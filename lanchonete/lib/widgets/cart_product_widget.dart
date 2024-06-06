@@ -3,19 +3,19 @@ import 'package:lanchonete/models/product_model.dart';
 import 'package:lanchonete/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
-class ProductWidget extends StatefulWidget {
+class CartProductWidget extends StatefulWidget {
   final Product product;
 
-  const ProductWidget({
+  const CartProductWidget({
     super.key,
     required this.product,
   });
 
   @override
-  State<ProductWidget> createState() => _ProductWidgetState();
+  State<CartProductWidget> createState() => _CartProductWidgetState();
 }
 
-class _ProductWidgetState extends State<ProductWidget> {
+class _CartProductWidgetState extends State<CartProductWidget> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductProvider>(context);
@@ -54,7 +54,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     onPressed: () {
                       provider.toggleCart(product: widget.product);
                     }, 
-                    child: const Text('Adicionar ao Carrinho')
+                    child: const Text('Remover do Carrinho')
                   ),
                 ],
               ),
