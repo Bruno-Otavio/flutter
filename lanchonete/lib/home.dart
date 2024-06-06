@@ -50,10 +50,10 @@ class _HomeState extends State<Home> {
             label: ''
           ),
         ],
-        iconSize: 30,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         selectedIconTheme: IconThemeData(
-          size: 35,
-          color: Theme.of(context).colorScheme.primary,
+          size: 30,
+          color: Theme.of(context).colorScheme.inversePrimary
         ),
       ),
     );
