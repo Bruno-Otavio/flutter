@@ -22,4 +22,12 @@ class ProductProvider extends ChangeNotifier {
     cartProducts.clear();
     notifyListeners();
   }
+
+  double calculateTotal() {
+    double total = 0;
+    for (var p in cartProducts) {
+      total += p.preco;
+    }
+    return total;
+  }
 }

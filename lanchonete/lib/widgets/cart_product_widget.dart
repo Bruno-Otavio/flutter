@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 
 class CartProductWidget extends StatefulWidget {
   final Product product;
+  final int quantity;
 
   const CartProductWidget({
     super.key,
     required this.product,
+    this.quantity = 1,
   });
 
   @override
@@ -48,7 +50,7 @@ class _CartProductWidgetState extends State<CartProductWidget> {
                 children: [
                   ListTile(
                     title: Text(widget.product.nome),
-                    subtitle: Text('R\$ ${widget.product.preco}'),
+                    subtitle: Text('R\$ ${widget.product.preco} Qtd. ${widget.quantity}'),
                   ),
                   ElevatedButton(
                     onPressed: () {
