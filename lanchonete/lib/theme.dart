@@ -12,17 +12,25 @@ class CustomTheme {
       useMaterial3: true,
 
       appBarTheme: const AppBarTheme(
-        color: Color(0xFFF3F7EC),
-        shadowColor: Color(0xFF005C78),
+        color: Color(0xFFE88D67),
         centerTitle: true,
         titleTextStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF005C78),
+          color: Color(0xFFF3F7EC),
         ) 
       ),
 
       scaffoldBackgroundColor: const Color(0xFFF3F7EC),
+      
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.all(0)
+          
+        )
+      ),
+
+      fontFamily: 'Poppings'
     );
   }
 }

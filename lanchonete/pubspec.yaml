@@ -21,3 +21,8 @@ flutter:
   assets:
     - lib/mocks/produtos.json
     - lib/mocks/usuarios.json
+
+  fonts:
+    - family: Poppings
+      fonts:
+        - asset: fonts/Poppins-Regular.ttf

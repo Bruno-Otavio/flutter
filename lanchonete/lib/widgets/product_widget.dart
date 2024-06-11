@@ -23,14 +23,13 @@ class _ProductWidgetState extends State<ProductWidget> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.secondary
-        )
       ),
-      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.only(
@@ -39,25 +38,36 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
               child: Image.network(
                 widget.product.img,
-                width: 125,
-                fit: BoxFit.cover,
+                width: 250,
+                fit: BoxFit.contain,
               ),
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(widget.product.nome),
-                    subtitle: Text('R\$ ${widget.product.preco}'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      provider.toggleCart(product: widget.product);
-                    }, 
-                    child: const Text('Adicionar ao Carrinho')
-                  ),
-                ],
+            Text(
+              widget.product.nome,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'R\$ ${widget.product.preco.toStringAsFixed(2)}',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onTertiary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                IconButton.outlined(
+                  onPressed: () {
+                    provider.toggleCart(product: widget.product);
+                  }, 
+                  icon: const Icon(Icons.shopping_cart, size: 20,),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  padding: const EdgeInsets.symmetric(horizontal: 20,),
+                )
+              ],
             )
           ],
         ),

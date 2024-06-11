@@ -30,21 +30,22 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: const Text('Produtos'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(5.0),
         child: FutureBuilder(
           future: futureProducts, 
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final products = snapshot.data!;
-              return ListView.builder(
-                itemCount: snapshot.data?.length ?? 0,
-                itemBuilder: (context, index) {
+              return GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 0.7,
+                children: List.generate(products.length, (index) {
                   final product = products[index];
                   return ProductWidget(product: product);
-                },
+                }),
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
