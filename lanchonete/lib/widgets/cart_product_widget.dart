@@ -25,11 +25,8 @@ class _CartProductWidgetState extends State<CartProductWidget> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.secondary
-        )
       ),
-      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
@@ -41,26 +38,108 @@ class _CartProductWidgetState extends State<CartProductWidget> {
               ),
               child: Image.network(
                 widget.product.img,
-                width: 125,
+                width: 105,
                 fit: BoxFit.cover,
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(widget.product.nome),
-                    subtitle: Text('R\$ ${widget.product.preco} Qtd. ${widget.quantity}'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      provider.toggleCart(product: widget.product);
-                    }, 
-                    child: const Text('Remover do Carrinho')
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.product.nome,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 17
+                      ),
+                    ),
+                    Text(
+                      'R\$ ${widget.product.preco.toStringAsFixed(2)}'
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    provider.toggleCart(product: widget.product);
+                  },
+                  icon: const Icon(Icons.close),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  iconSize: 30,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.product.quantity--;
+                        });
+                      },
+                      child: Container(
+                        height: 35,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(100),
+                            bottomLeft: Radius.circular(100),
+                          ),
+                          color: Theme.of(context).colorScheme.onSecondary
+                        ),
+                        child: Icon(
+                          Icons.remove,
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 35,
+                      height: 35,
+                      color: Theme.of(context).colorScheme.surface,
+                      child: Center(
+                        child: Text(
+                          '${widget.product.quantity}',
+                          style: const TextStyle(
+                            fontSize: 25
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.product.quantity++;
+                        });
+                      },
+                      child: Container(
+                        height: 35,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(100),
+                            bottomRight: Radius.circular(100),
+                          )
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ],
         ),
       ),

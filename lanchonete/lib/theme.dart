@@ -22,13 +22,6 @@ class CustomTheme {
       ),
 
       scaffoldBackgroundColor: const Color(0xFFF3F7EC),
-      
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.all(0)
-          
-        )
-      ),
 
       fontFamily: 'Poppings'
     );

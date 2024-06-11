@@ -3,13 +3,19 @@ class Product {
   final String nome;
   final String img;
   final dynamic preco;
+  final int quantity;
 
   const Product({
     required this.id,
     required this.nome,
     required this.img,
     required this.preco,
+    this.quantity = 0,
   });
+
+  set quantity (int value) {
+    quantity = value;
+  }
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return switch (json) {

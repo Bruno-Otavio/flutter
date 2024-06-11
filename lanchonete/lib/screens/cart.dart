@@ -20,21 +20,17 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping Cart'),
+        title: const Text('Carrinho da Beth'),
       ),
-      body: ListView.builder(
-        itemCount: cart.length,
-        itemBuilder: (context, index) {
-          final product = cart[index];
-
-          if (renderedProducts.contains(product)) {
-            product.quantity += 1;
-            return Container();
-          }
-          
-          renderedProducts.add(product);
-          return CartProductWidget(product: product);
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: ListView.builder(
+          itemCount: cart.length,
+          itemBuilder: (context, index) {
+            final product = cart[index];
+            return CartProductWidget(product: product);
+          },
+        ),
       ),
     );
   }

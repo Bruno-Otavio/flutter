@@ -25,6 +25,8 @@ class _ProductWidgetState extends State<ProductWidget> {
         borderRadius: BorderRadius.circular(10),
       ),
       color: Colors.white,
+      elevation: 2,
+      shadowColor: Theme.of(context).colorScheme.onSecondary,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
