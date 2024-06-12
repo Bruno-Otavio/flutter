@@ -3,19 +3,23 @@ class Product {
   final String nome;
   final String img;
   final dynamic preco;
-  final int quantity;
+  int quantity = 1;
 
-  const Product({
+  Product({
     required this.id,
     required this.nome,
     required this.img,
     required this.preco,
-    this.quantity = 0,
   });
+  
+  @override
+  bool operator ==(Object other) =>
+    other is Product &&
+    other.runtimeType == runtimeType &&
+    other.id == id;
 
-  set quantity (int value) {
-    quantity = value;
-  }
+  @override
+  int get hashCode => id.hashCode;
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return switch (json) {
