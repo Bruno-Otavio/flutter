@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lanchonete/home.dart';
 import 'package:lanchonete/provider/product_provider.dart';
+import 'package:lanchonete/screens/send.dart';
 import 'package:lanchonete/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,9 @@ class _MainAppState extends State<MainApp> {
         debugShowCheckedModeBanner: false,
         theme: CustomTheme.lightThemeData(context),
         home: const Home(),
+        routes: {
+          '/send': (context) => const SendScreen(),
+        },
       ),
     );
   }

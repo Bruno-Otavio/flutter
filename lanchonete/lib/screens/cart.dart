@@ -55,7 +55,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
               TextButton(
                 onPressed: () {
-          
+                  Navigator.pushNamed(context, '/send');
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.onTertiary,
