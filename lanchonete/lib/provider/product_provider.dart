@@ -8,25 +8,33 @@ class ProductProvider extends ChangeNotifier {
     return cartProducts;
   }
 
-  void toggleCart({ required Product product}) async {
-    bool exists = cartProducts.contains(product);
-    if (exists) {
-      cartProducts.remove(product);
-    } else if (!exists) {
-      cartProducts.add(product);
-    }
+  void addToCart({ required Product product}) async {
+    cartProducts.add(product);
     notifyListeners();
   } 
+
+  void removeFromCart({ required Product product}) async {
+    cartProducts.remove(product);
+    notifyListeners();
+  }
 
   void clearCart() {
     cartProducts.clear();
     notifyListeners();
   }
 
-  double calculateTotal() {
+  double calculateTotalPrice() {
     double total = 0;
     for (var p in cartProducts) {
-      total += p.preco;
+      total += p.preco * p.quantity;
+    }
+    return total;
+  }
+
+  double totalProducts() {
+    double total = 0;
+    for (var p in cartProducts) {
+      total += p.quantity;
     }
     return total;
   }

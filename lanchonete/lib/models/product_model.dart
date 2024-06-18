@@ -11,6 +11,10 @@ class Product {
     required this.img,
     required this.preco,
   });
+
+  get precoFinal {
+    return preco * quantity;
+  }
   
   @override
   bool operator ==(Object other) =>

@@ -59,7 +59,7 @@ class _CartProductWidgetState extends State<CartProductWidget> {
                       ),
                     ),
                     Text(
-                      'R\$ ${widget.product.preco.toStringAsFixed(2)}'
+                      'R\$ ${widget.product.precoFinal.toStringAsFixed(2)}'
                     ),
                   ],
                 ),
@@ -71,7 +71,7 @@ class _CartProductWidgetState extends State<CartProductWidget> {
               children: [
                 IconButton(
                   onPressed: () {
-                    provider.toggleCart(product: widget.product);
+                    provider.removeFromCart(product: widget.product);
                   },
                   icon: const Icon(Icons.close),
                   color: Theme.of(context).colorScheme.onSecondary,
@@ -84,6 +84,9 @@ class _CartProductWidgetState extends State<CartProductWidget> {
                         setState(() {
                           widget.product.quantity--;
                         });
+                        if (widget.product.quantity < 1) {
+                          provider.removeFromCart(product: widget.product);
+                        }
                       },
                       child: Container(
                         height: 35,

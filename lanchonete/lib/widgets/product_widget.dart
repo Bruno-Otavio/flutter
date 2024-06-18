@@ -63,8 +63,13 @@ class _ProductWidgetState extends State<ProductWidget> {
                 ),
                 IconButton.outlined(
                   onPressed: () {
-                    provider.toggleCart(product: widget.product);
-                  }, 
+                    if (!provider.cartProducts.contains(widget.product)) {
+                      provider.addToCart(product: widget.product);
+                    } else {
+                      final product = provider.cart[provider.cart.indexOf(widget.product)];
+                      product.quantity++;
+                    }
+                  },
                   icon: const Icon(Icons.shopping_cart, size: 20,),
                   color: Theme.of(context).colorScheme.onSecondary,
                   padding: const EdgeInsets.symmetric(horizontal: 20,),

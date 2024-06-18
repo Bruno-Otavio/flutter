@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:lanchonete/provider/product_provider.dart';
 import 'package:lanchonete/widgets/cart_product_widget.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +11,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List getRenderedProducts(List products) {
-    final List rendered = [];
-
-    for (int i = 0; i < products.length; i++) {
-      if (!rendered.contains(products[i])) {
-        products[i].quantity++;
-        rendered.add(products[i]);
-      }
-    }
-
-    return rendered;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -35,8 +21,6 @@ class _CartScreenState extends State<CartScreen> {
     final provider = Provider.of<ProductProvider>(context);
     final cart = provider.cart;
 
-    final List rendered = getRenderedProducts(cart);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Carrinho da Beth'),
@@ -44,13 +28,54 @@ class _CartScreenState extends State<CartScreen> {
       body: Padding(
         padding: const EdgeInsets.all(5.0),
         child: ListView.builder(
-          itemCount: rendered.length,
+          itemCount: cart.length,
           itemBuilder: (context, index) {
-            final product = rendered[index];
+            final product = cart[index];
             return CartProductWidget(product: product);
           },
         ),
       ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.onSecondary,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Total: R\$ ${provider.calculateTotalPrice().toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Theme.of(context).colorScheme.surface
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+          
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.onTertiary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  overlayColor: Theme.of(context).colorScheme.surface
+                ),
+                child: Text(
+                  'Finalizar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.surface
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      )
     );
   }
 }
