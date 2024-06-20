@@ -35,7 +35,7 @@ class _DestinosPageState extends State<DestinosPage> {
             return Text('${snapshot.error}');
           }
 
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
@@ -46,7 +46,7 @@ class _DestinosPageState extends State<DestinosPage> {
 
     return GridView.count(
       crossAxisCount: 2,
-      childAspectRatio: 1 / 1,
+      childAspectRatio: 1 / 0.75,
       padding: const EdgeInsets.all(12),
       crossAxisSpacing: gap,
       mainAxisSpacing: gap,
