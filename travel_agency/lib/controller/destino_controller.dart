@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:travel_agency/constants.dart';
 import 'package:travel_agency/models/destino_model.dart';
 
 class DestinoController {
   static Future<List> fetchDestinos() async {
     final response = await http.
-      get(Uri.parse('http://10.87.195.24:3000/destinos'));
+      get(Uri.parse('$apiUrl/destinos'));
 
     if (response.statusCode == 200 ) {
       final body = jsonDecode(response.body);
