@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_agency/controller/reserva_controller.dart';
 import 'package:travel_agency/models/destino_model.dart';
 import 'package:travel_agency/models/reserva_model.dart';
@@ -58,17 +57,38 @@ class _DestinoWidgetState extends State<DestinoWidget> {
   }
 
   SizedBox _modal() {
+    final LatLng pPlex = LatLng(widget.destino.lat, widget.destino.long);
     return SizedBox(
       height: 500,
       child: Center(
           child: Column(
         children: [
-          const SizedBox(
-            height: 25,
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 75, vertical: 10),
+            child: Divider(thickness: 3,),
           ),
           FormReservas(destino: widget.destino),
-        ],
-      )),
+          Expanded(
+            child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: pPlex,
+                  zoom: 13.5,
+                ),
+                mapType: MapType.normal,
+                zoomControlsEnabled: false,
+                zoomGesturesEnabled: false,
+                markers: {
+                  Marker(
+                    markerId: const MarkerId('_currentLocation'),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: pPlex
+                  )
+                },
+              )
+            ),
+          ],
+        )
+      ),
     );
   }
 }
@@ -92,7 +112,8 @@ class _FormReservasState extends State<FormReservas> {
   final TextEditingController _dateInicioController = TextEditingController();
   final TextEditingController _dateFimController = TextEditingController();
 
-  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+  Future<void> _selectDate(
+      BuildContext context, TextEditingController controller) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -101,9 +122,10 @@ class _FormReservasState extends State<FormReservas> {
     );
 
     if (picked != null) {
-      List date = picked.toString().split(' ')[0].split('-'); 
+      List date = picked.toString().split(' ')[0].split('-');
       setState(() {
-        controller.text = '${date[date.length-1]}/${date[date.length-2]}/${date[date.length-3]}';
+        controller.text =
+            '${date[date.length - 1]}/${date[date.length - 2]}/${date[date.length - 3]}';
       });
     }
   }
@@ -124,20 +146,18 @@ class _FormReservasState extends State<FormReservas> {
                 }
               },
               decoration: const InputDecoration(
-                labelText: 'Digite seu Nome',
-                filled: true,
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
+                  labelText: 'Digite seu Nome',
+                  filled: true,
+                  border: InputBorder.none,
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
                     width: 1,
                     color: Colors.blue,
-                  )
-                )
-              ),
+                  ))),
             ),
-
-            const SizedBox(height: 20,),
-
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -156,20 +176,19 @@ class _FormReservasState extends State<FormReservas> {
                       border: InputBorder.none,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.blue,
-                        )
-                      ),
+                          borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.blue,
+                      )),
                     ),
                     onTap: () {
                       _selectDate(context, _dateInicioController);
                     },
                   ),
                 ),
-                
-                const SizedBox(width: 15,),
-
+                const SizedBox(
+                  width: 15,
+                ),
                 Expanded(
                   child: TextFormField(
                     controller: _dateFimController,
@@ -185,11 +204,10 @@ class _FormReservasState extends State<FormReservas> {
                       border: InputBorder.none,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.blue,
-                        )
-                      ),
+                          borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.blue,
+                      )),
                     ),
                     onTap: () {
                       _selectDate(context, _dateFimController);
@@ -198,9 +216,9 @@ class _FormReservasState extends State<FormReservas> {
                 ),
               ],
             ),
-
-            const SizedBox(height: 20,),
-
+            const SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
@@ -208,19 +226,18 @@ class _FormReservasState extends State<FormReservas> {
                   final List dateFim = _dateFimController.text.split('/');
 
                   final Reserva reserva = Reserva(
-                    nomeCliente: _nomeClienteController.text,
-                    dataInicio: DateTime(
-                      int.parse(dateInicio[dateInicio.length-1]),
-                      int.parse(dateInicio[dateInicio.length-2]),
-                      int.parse(dateInicio[dateInicio.length-3]),
-                    ),
-                    dataFim: DateTime(
-                      int.parse(dateFim[dateFim.length-1]),
-                      int.parse(dateFim[dateFim.length-2]),
-                      int.parse(dateFim[dateFim.length-3]),
-                    ),
-                    destinoId: widget.destino.id
-                  );
+                      nomeCliente: _nomeClienteController.text,
+                      dataInicio: DateTime(
+                        int.parse(dateInicio[dateInicio.length - 1]),
+                        int.parse(dateInicio[dateInicio.length - 2]),
+                        int.parse(dateInicio[dateInicio.length - 3]),
+                      ),
+                      dataFim: DateTime(
+                        int.parse(dateFim[dateFim.length - 1]),
+                        int.parse(dateFim[dateFim.length - 2]),
+                        int.parse(dateFim[dateFim.length - 3]),
+                      ),
+                      destinoId: widget.destino.id);
 
                   final Map<String, dynamic> data = {
                     'nomeCliente': reserva.nomeCliente,
@@ -229,13 +246,14 @@ class _FormReservasState extends State<FormReservas> {
                     'destinoId': reserva.destinoId,
                   };
 
-                  ReservaController.createReserva(data)
-                    .then((response) {
-                      if (response.statusCode == 201) {
-                        return const SnackBar(content: Text('Reserva criada com sucesso.'));
-                      }
-                      return const SnackBar(content: Text('Falha ao criar reserva.'));
-                    });
+                  ReservaController.createReserva(data).then((response) {
+                    if (response.statusCode == 201) {
+                      return const SnackBar(
+                          content: Text('Reserva criada com sucesso.'));
+                    }
+                    return const SnackBar(
+                        content: Text('Falha ao criar reserva.'));
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(

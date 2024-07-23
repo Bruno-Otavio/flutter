@@ -5,6 +5,8 @@ class Destino {
   final int id;
   final String nome;
   final int valor;
+  final double lat;
+  final double long;
   final List pontosList;
   final List hoteisList;
 
@@ -20,6 +22,8 @@ class Destino {
     required this.id,
     required this.nome,
     required this.valor,
+    required this.lat,
+    required this.long,
     required this.pontosList,
     required this.hoteisList,
   });
@@ -30,6 +34,8 @@ class Destino {
         'id': int id,
         'nome': String nome,
         'valor': int valor,
+        'lat': double lat,
+        'long': double long,
         'pontos': List pontos,
         'hoteis': List hoteis,
       } =>
@@ -37,6 +43,8 @@ class Destino {
           id: id,
           nome: nome,
           valor: valor,
+          lat: lat,
+          long: long,
           pontosList: pontos,
           hoteisList: hoteis,
         ),
