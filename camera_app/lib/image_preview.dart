@@ -4,9 +4,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 class ImagePreview extends StatefulWidget {
-  XFile file;
+  final XFile file;
 
-  ImagePreview(this.file, {super.key});
+  const ImagePreview(this.file, {super.key});
 
   @override
   State<ImagePreview> createState() => _ImagePreviewState();
