@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:camera_app/image_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
-  
+
   Future<void> _takePicture() async {
     XFile? picture;
 
