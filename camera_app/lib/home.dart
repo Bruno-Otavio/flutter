@@ -13,6 +13,25 @@ class _HomePageState extends State<HomePage> {
   List<CameraDescription> _cameras = [];
   CameraController? _cameraController;
 
+  Future<void> _setupCameraController() async {
+    List<CameraDescription> cameras = await availableCameras();
+
+    if (cameras.isNotEmpty) {
+      setState(() {
+        _cameras = cameras;
+        _cameraController =
+            CameraController(cameras.first, ResolutionPreset.max);
+      });
+
+      _cameraController?.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {});
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -65,24 +84,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  Future<void> _setupCameraController() async {
-    List<CameraDescription> cameras = await availableCameras();
-
-    if (cameras.isNotEmpty) {
-      setState(() {
-        _cameras = cameras;
-        _cameraController =
-            CameraController(cameras.first, ResolutionPreset.max);
-      });
-
-      _cameraController?.initialize().then((_) {
-        if (!mounted) {
-          return;
-        }
-        setState(() {});
-      });
-    }
   }
 }
