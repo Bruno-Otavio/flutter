@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:js_interop';
-
 import 'package:camera/camera.dart';
 import 'package:camera_app/image_preview.dart';
 import 'package:flutter/material.dart';
