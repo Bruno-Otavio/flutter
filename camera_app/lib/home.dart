@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:js_interop';
+
 import 'package:camera/camera.dart';
 import 'package:camera_app/image_preview.dart';
 import 'package:flutter/material.dart';
@@ -33,12 +36,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _takePicture() async {
+    XFile? picture;
+
+    if (_cameraController!.value.isTakingPicture || _cameraController!.value.isInitialized) {
+      return;
+    }
+
     try {
-      XFile picture = await _cameraController!.takePicture();
+      picture = await _cameraController!.takePicture();
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ImagePreview(picture),
+          builder: (context) => ImagePreview(picture!),
         ),
       );
     } on CameraException catch (e) {
