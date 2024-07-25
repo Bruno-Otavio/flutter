@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _cameras = cameras;
         _cameraController =
-            CameraController(cameras.first, ResolutionPreset.max);
+            CameraController(cameras.first, ResolutionPreset.high);
       });
 
       _cameraController?.initialize().then((_) {
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _takePicture() async {
     XFile? picture;
 
-    if (_cameraController!.value.isTakingPicture || _cameraController!.value.isInitialized) {
+    if (_cameraController!.value.isTakingPicture || !_cameraController!.value.isInitialized) {
       return;
     }
 
