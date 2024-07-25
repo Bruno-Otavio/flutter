@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:camera_app/image_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _cameras = cameras;
         _cameraController =
-            CameraController(cameras.first, ResolutionPreset.high);
+            CameraController(cameras.first, ResolutionPreset.max);
       });
 
       _cameraController?.initialize().then((_) {
@@ -31,11 +35,12 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
-
+  
   Future<void> _takePicture() async {
     XFile? picture;
 
-    if (_cameraController!.value.isTakingPicture || !_cameraController!.value.isInitialized) {
+    if (_cameraController!.value.isTakingPicture ||
+        !_cameraController!.value.isInitialized) {
       return;
     }
 
@@ -83,10 +88,25 @@ class _HomePageState extends State<HomePage> {
                 _cameraController!,
               ),
             ),
-            IconButton(
-              onPressed: _takePicture,
-              iconSize: 75,
-              icon: const Icon(Icons.camera),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  iconSize: 50,
+                  icon: const Icon(Icons.image),
+                ),
+                IconButton(
+                  onPressed: _takePicture,
+                  iconSize: 75,
+                  icon: const Icon(Icons.camera),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  iconSize: 50,
+                  icon: const Icon(Icons.flip_camera_android),
+                ),
+              ],
             )
           ],
         ),
