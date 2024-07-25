@@ -32,6 +32,20 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> _takePicture() async {
+    try {
+      XFile picture = await _cameraController!.takePicture();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ImagePreview(picture),
+        ),
+      );
+    } on CameraException catch (e) {
+      debugPrint('Error ocurred while taking picture : $e');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -64,19 +78,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             IconButton(
-              onPressed: () async {
-                try {
-                  XFile picture = await _cameraController!.takePicture();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ImagePreview(picture),
-                    ),
-                  );
-                } on CameraException catch (e) {
-                  debugPrint('Error ocurred while taking picture : $e');
-                }
-              },
+              onPressed: _takePicture,
               iconSize: 75,
               icon: const Icon(Icons.camera),
             )
