@@ -1,4 +1,5 @@
 import 'package:firebase_crud/firebase_options.dart';
+import 'package:firebase_crud/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,9 +18,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        body: HomePage(),
       ),
     );
   }
