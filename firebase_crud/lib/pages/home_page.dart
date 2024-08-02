@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/services/firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   final TextEditingController _noteController = TextEditingController();
 
-  void openNoteBox() {
+  void openNoteBox({String? id}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -26,8 +27,13 @@ class _HomePageState extends State<HomePage> {
               if (_noteController.text == '') {
                 return;
               }
-              
-              firestoreService.addNote(_noteController.text);
+
+              if (id == null) {
+                firestoreService.addNote(_noteController.text);
+              } else {
+                firestoreService.updateNote(id, _noteController.text);
+              }
+
               _noteController.clear();
               Navigator.pop(context);
             },
@@ -43,6 +49,47 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes'),
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: firestoreService.getNotesStrema(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List notesList = snapshot.data!.docs;
+
+            return ListView.builder(
+              itemCount: notesList.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot document = notesList[index];
+                String docID = document.id;
+
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                String noteText = data['note'];
+
+                return ListTile(
+                  title: Text(noteText),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () => openNoteBox(id: docID),
+                        icon: const Icon(Icons.edit),
+                      ),
+                      IconButton(
+                        onPressed: () => firestoreService.deleteNote(docID),
+                        icon: const Icon(Icons.delete),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: openNoteBox,
