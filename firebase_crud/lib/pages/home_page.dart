@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crud/services/auth_service.dart';
 import 'package:firebase_crud/services/firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -49,6 +50,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await AuthService().signOut(context: context);
+            },
+            icon: const Icon(Icons.exit_to_app),
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: firestoreService.getNotesStrema(),
