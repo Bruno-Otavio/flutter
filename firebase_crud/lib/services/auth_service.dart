@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/pages/home_page.dart';
 import 'package:firebase_crud/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
   Future<void> singUp({
@@ -10,15 +11,31 @@ class AuthService {
     required BuildContext context,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage(),),);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
+      String message = '';
       if (e.code == 'weak-password') {
-        print('Weak Password');
+        message = 'Weak Password';
       } else if (e.code == 'email-already-in-use') {
-        print('Email already in use');
+        message = 'Email already in use';
       }
+
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        textColor: Theme.of(context).colorScheme.primary,
+        fontSize: 20,
+      );
     }
   }
 
@@ -48,7 +65,14 @@ class AuthService {
         message = 'Wrong password';
       }
 
-      print(message);
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        textColor: Theme.of(context).colorScheme.primary,
+        fontSize: 20,
+      );
     }
   }
 
