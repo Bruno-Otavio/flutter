@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/services/auth_service.dart';
 import 'package:firebase_crud/services/firestore.dart';
+import 'package:firebase_crud/theme/theme_provider.dart';
+import 'package:firebase_crud/widgets/input_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,9 +22,7 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: TextField(
-          controller: _noteController,
-        ),
+        content: InputText(controller: _noteController, placeholder: 'Note'),
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -51,6 +52,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Notes'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+            icon: const Icon(Icons.dark_mode),
+          ),
           IconButton(
             onPressed: () async {
               await AuthService().signOut(context: context);

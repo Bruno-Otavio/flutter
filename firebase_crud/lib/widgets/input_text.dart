@@ -26,7 +26,7 @@ class InputText extends StatelessWidget {
         controller: _controller,
         obscureText: obscure,
         decoration: InputDecoration(
-          fillColor: Colors.grey.shade200,
+          fillColor: Theme.of(context).colorScheme.primary,
           filled: true,
           hintText: placeholder,
           contentPadding:
@@ -34,11 +34,18 @@ class InputText extends StatelessWidget {
           hintStyle: const TextStyle(
             fontSize: 20,
           ),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               width: 2,
-              color: Colors.grey,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+          focusedBorder:  OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+              width: 2,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
         ),

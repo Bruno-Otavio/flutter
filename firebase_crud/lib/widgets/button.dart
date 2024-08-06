@@ -16,7 +16,7 @@ class Button extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.tertiary,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         width: double.infinity,
@@ -25,9 +25,9 @@ class Button extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),

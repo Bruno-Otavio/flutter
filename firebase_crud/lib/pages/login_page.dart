@@ -58,7 +58,13 @@ class _LoginPageState extends State<LoginPage> {
                       builder: (context) => const RegisterPage(),
                     ),
                   ),
-                  child: const Text('Crie uma nova conta.', style: TextStyle(fontSize: 17),),
+                  child: Text(
+                    'Crie uma nova conta.',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
                 ),
               ],
             ),
