@@ -1,3 +1,6 @@
 video_player
 chewie
 gal
+record
+just audio
+path
