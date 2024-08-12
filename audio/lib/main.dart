@@ -1,4 +1,5 @@
 import 'package:audio/screens/home.dart';
+import 'package:audio/screens/regexr.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,11 +11,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: HomeScreen()
-      ),
+      initialRoute: '/audio',
+      routes: {
+        '/audio': (context) => const HomeScreen(),
+        '/regexr': (context) => const RegExrScreen(),
+      },
     );
   }
 }

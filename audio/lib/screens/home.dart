@@ -1,3 +1,4 @@
+import 'package:audio/widgets/menu_drawer.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
@@ -38,9 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            _isRecording = !_isRecording;
+          });
+        },
         child: !_isRecording ? const Icon(Icons.mic) : const Icon(Icons.pause),
       ),
+      drawer: const MenuDrawer(),
     );
   }
 }

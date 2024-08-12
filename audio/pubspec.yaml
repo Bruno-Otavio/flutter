@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   just_audio: ^0.9.39
+  mask_text_input_formatter: ^2.9.0
   path: ^1.9.0
   path_provider: ^2.1.4
   record: ^5.1.2
