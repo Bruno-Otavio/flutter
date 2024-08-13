@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:audio/widgets/menu_drawer.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
+import 'package:path/path.dart' as p;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final AudioRecorder _audioRecorder = AudioRecorder();
   bool _isRecording = false;
+
+  String? _recordingPath;
 
   @override
   void initState() {
@@ -32,17 +38,41 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
           child: ElevatedButton(
             onPressed: () async {
-              _audioPlayer.play(AssetSource('metal_pipe_falling.mp3'));
+              await _audioPlayer.setFilePath(_recordingPath!);
+              _audioPlayer.play();
             },
             child: const Text('Play Audio'),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _isRecording = !_isRecording;
-          });
+        onPressed: () async {
+          if (_isRecording) {
+            String? filePath = await _audioRecorder.stop();
+            if (filePath != null) {
+              setState(() {
+                _isRecording = false;
+                _recordingPath = filePath;
+              });
+            }
+          } else {
+            if (await _audioRecorder.hasPermission()) {
+              final Directory appDocumentsDir =
+                  await getApplicationDocumentsDirectory();
+              final String filePath =
+                  p.join(appDocumentsDir.path, 'record.wav');
+
+              await _audioRecorder.start(
+                const RecordConfig(),
+                path: filePath,
+              );
+
+              setState(() {
+                _isRecording = !_isRecording;
+                _recordingPath = null;
+              });
+            }
+          }
         },
         child: !_isRecording ? const Icon(Icons.mic) : const Icon(Icons.pause),
       ),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/pages/register_page.dart';
 import 'package:firebase_crud/services/auth_service.dart';
 import 'package:firebase_crud/widgets/button.dart';
@@ -16,6 +17,18 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      setState(() {
+        _user = event;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
+                ),
+                Button(
+                  text: 'Entrar com o google',
+                  onPressed: () => AuthService().signInWithGoogle(context: context),
                 ),
               ],
             ),

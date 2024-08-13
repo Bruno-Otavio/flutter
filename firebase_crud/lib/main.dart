@@ -22,9 +22,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: Provider.of<ThemeProvider>(context).themeData,
-        darkTheme: darktheme,
-        home: const LoginPage());
+      debugShowCheckedModeBanner: false,
+      theme: Provider.of<ThemeProvider>(context).themeData,
+      darkTheme: darktheme,
+      home: const LoginPage(),
+    );
   }
 }

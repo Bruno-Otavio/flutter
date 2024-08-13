@@ -3,6 +3,7 @@ import 'package:firebase_crud/pages/home_page.dart';
 import 'package:firebase_crud/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   Future<void> singUp({
@@ -85,5 +86,29 @@ class AuthService {
         builder: (context) => const LoginPage(),
       ),
     );
+  }
+
+  Future<void> signInWithGoogle({required BuildContext context}) async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      ); 
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: '$e',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        textColor: Theme.of(context).colorScheme.primary,
+        fontSize: 20,
+      );
+    }
   }
 }

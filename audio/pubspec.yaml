@@ -7,7 +7,6 @@ environment:
   sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
-  audioplayers: ^6.0.0
   flutter:
     sdk: flutter
   just_audio: ^0.9.39
