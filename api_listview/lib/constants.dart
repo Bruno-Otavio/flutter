@@ -1,1 +1,1 @@
-const apiUrl = 'http://10.87.195.7:3000';
+const apiUrl = 'http://10.87.195.6:3000';

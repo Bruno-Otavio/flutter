@@ -1,8 +1,17 @@
 import 'package:api_listview/screens/home.dart';
+import 'package:api_listview/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -12,16 +21,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: const ColorScheme.light(
-          primary: Color(0xFF787878),
-        ),
-      ),
+      theme: Provider.of<ThemeProvider>(context).theme,
       initialRoute: '/',
       routes: {
         '/': (context) => const HomeScreen(),
-      }
+      },
     );
   }
 }
