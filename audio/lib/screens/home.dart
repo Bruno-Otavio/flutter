@@ -36,12 +36,23 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: Center(
-          child: ElevatedButton(
-            onPressed: () async {
-              await _audioPlayer.setFilePath(_recordingPath!);
-              _audioPlayer.play();
-            },
-            child: const Text('Play Audio'),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  await _audioPlayer.setFilePath(_recordingPath!);
+                  _audioPlayer.play();
+                },
+                child: const Text('Play Audio'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await _audioPlayer.setAsset('assets/metal_pipe_falling.mp3');
+                  _audioPlayer.play();
+                },
+                child: const Text('Play Metal'),
+              ),
+            ],
           ),
         ),
       ),
