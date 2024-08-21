@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:notifications/main.dart';
 
 class FirebaseApi {
   final FirebaseMessaging _firebaseNotification = FirebaseMessaging.instance;
@@ -15,6 +16,14 @@ class FirebaseApi {
   }
 
   void handleMessage(RemoteMessage? message) {
-    
+    if (message == null) return;
+
+    navigatorKey.currentState?.pushNamed('/notifications', arguments: message);
+  }
+
+  Future initPushNotifications() async {
+    FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
+
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
   }
 } 
