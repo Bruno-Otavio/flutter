@@ -7,3 +7,7 @@ path
 mask_text_input_formatter
 google_sign_in
 awesome_notifications
+flutter_launcher_icons
+
+extenção vscode:
+vim

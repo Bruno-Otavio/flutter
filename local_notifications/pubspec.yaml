@@ -10,6 +10,8 @@ dependencies:
   awesome_notifications: ^0.9.3+1
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.0
+  flutter_launcher_icons: ^0.13.1
   fluttertoast: ^8.2.8
 
 dev_dependencies:
@@ -22,3 +24,8 @@ flutter:
 
   assets:
     - assets/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/band-logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
