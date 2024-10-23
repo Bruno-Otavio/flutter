@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:desafio_xml/usuario_model.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:xml/xml.dart' as xml;
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +31,60 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         )
         .toList();
+  }
+
+  void _add() async {
+    final TextEditingController controller1 = TextEditingController();
+    final TextEditingController controller2 = TextEditingController();
+    final TextEditingController controller3 = TextEditingController();
+
+    final file =
+        await DefaultAssetBundle.of(context).loadString('assets/usuarios.xml');
+    final document = xml.XmlDocument.parse(file);
+
+    final builder = xml.XmlBuilder();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Adicionar'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(controller: controller1),
+              TextField(controller: controller2),
+              TextField(controller: controller3),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                builder.processing('xml', 'version="1.0"');
+                builder.element('usuario', nest: () {
+                  builder.element('id', nest: Random().nextInt(100));
+                  builder.element('nome', nest: controller1.text);
+                  builder.element('email', nest: controller2.text);
+                  builder.element('senha', nest: controller3.text);
+                });
+
+                final completeDocument = builder.buildDocument();
+                document.children.add(completeDocument.rootElement.copy());
+              },
+              child: const Text('Confirmar'),
+            ),
+            ElevatedButton(onPressed: () => _export(document), child: const Text('Exportar')),
+          ],
+        );
+      },
+    );
+  }
+
+  void _export(document) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/usuarios.xml');
+    file.writeAsString(document.toString());
+    print(directory.path);
   }
 
   @override
@@ -84,6 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
+          ElevatedButton(onPressed: _add, child: const Text('Adicionar')),
         ],
       ),
     );
