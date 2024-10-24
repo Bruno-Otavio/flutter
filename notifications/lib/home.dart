@@ -14,6 +14,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Text('Send Notification'),
+        ),
+      ),
     );
   }
 }
