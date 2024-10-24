@@ -26,6 +26,4 @@ class FirebaseApi {
 
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
   }
-
-  Future<void> sendPushNotification() async {}
 } 
